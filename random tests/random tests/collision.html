@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div Edges Touching</title>
+</head>
+<body>
+    <style>
+        body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.draggable {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-color: #3498db;
+}
+
+    </style>
+    <div id="div1" class="draggable"></div>
+    <div id="div2" class="draggable"></div>
+    <script>
+        const div1 = document.getElementById('div1');
+const div2 = document.getElementById('div2');
+
+function areDivsTouching() {
+    const rect1 = div1.getBoundingClientRect();
+    const rect2 = div2.getBoundingClientRect();
+
+    return !(
+        rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom
+    );
+}
+
+function checkCollision() {
+    if (areDivsTouching()) {
+        console.log('Div edges are touching!');
+        // Add your logic here for when the div edges are touching
+    } else {
+        console.log('Div edges are not touching.');
+        // Add your logic here for when the div edges are not touching
+    }
+}
+
+// Example: Move the second div to the right
+div2.style.left = '100px';
+
+// Check for collision after a certain event, e.g., on button click or at regular intervals
+checkCollision();
+
+    </script>
+</body>
+</html>

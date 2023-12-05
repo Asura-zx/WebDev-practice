@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+}
+        .plane{
+            position: absolute;
+            top: 50%;
+            left: 50%;/*this centers the top left corner of square*/
+            transform-origin: center center;/*defines the center of rotation*/
+            transform:translate(-50%, -50%);/*here, since top left cornered to the center of screen, we decrease the side and top location of plane by half its dimension to position the plane to center of screen by its center*/
+            width: 500px;
+            height: 500px;
+            background: red;
+            transition: transform 0.2s linear,  backface-visibility 0.2s linear;
+        }
+        .plane.back{
+            background-color: green;
+        }
+    </style>
+    <div class="plane"></div>
+    <script>
+
+        var plane=document.querySelector(".plane");
+        let rotx=0;
+        let roty=0;
+        let rotz=0;
+
+        document.addEventListener('keydown', (event) =>{
+            switch (event.key) {
+                case 'ArrowUp':
+                    rotx+=30;
+                    break;
+                case 'ArrowDown':
+                    rotx-=30;
+                    break;
+                case 'ArrowRight':
+                    roty+=30;
+                    break;
+                case 'ArrowLeft':
+                    roty-=30;
+                    break;
+            }
+            updaterot();
+        });
+        function updaterot(){
+            /*so, each time the plane is translated we have to relocate the plane, since it will transform with its top left as pivot. so we constantly decrese its loction*/
+            plane.style.transform=`translate(-50%, -50%) rotateX(${rotx}deg) rotateY(${roty}deg) rotateZ(${rotz}deg)`;
+            //now here lets see 2 cases, fist let the rotation be less than 360. here rotx%360 have real part of 0, so the value corresponds to rotx
+            //again when rotation is greater than 360, the rotx%360 give value on how much is the rotation compared to 0deg. i.e rotx yet again, but 
+            //for values greater than 1 complete rotation and doesnot let the value exceed 360
+            
+            //when the plane's rotation is greater than 90deg and less than 270 deg, only backface is visible so we can change the color of entire plane to make it seem like we are looking at backface.
+            if(Math.abs(rotx%360)>90 && Math.abs(rotx % 360)<270 || Math.abs(roty%360)>90 && Math.abs(roty % 360)<270){
+            plane.classList.add("back");
+            
+            }
+        else{
+            plane.classList.remove("back");
+        }
+        }
+        
+    </script>
+</body>
+</html>

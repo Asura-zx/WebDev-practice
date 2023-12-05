@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>foreshortening</title>
+    <style>
+        body{
+            background-color: brown;
+            perspective: 10000px;
+        }
+        .plane{
+            background: #accdff;
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="plane"></div>
+    <script>
+        const plane = document.querySelector(".plane");
+        let rotx = 0;
+        let roty = 0;
+        let rotz = 0;
+        addEventListener('keydown', (event)=>{
+            switch (event.key) {
+                case 'ArrowUp':
+                    rotx+=30;
+                    break;
+                case 'ArrowDown':
+                    rotx-=30;
+                    break;
+                case 'ArrowRight':
+                    roty+=30;
+                    break;
+                case 'ArrowLeft':
+                    roty-=30;
+                    break;
+            }
+            updaterot();
+        });
+        function updaterot(){
+            plane.style.transform=`translate(-50%, -50%) rotateX(${rotx}deg) rotateY(${roty}deg) rotateZ(${rotz}deg)`;
+        }
+    </script>
+</body>
+</html>
